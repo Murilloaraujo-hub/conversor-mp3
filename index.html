@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video2MP3 — Conversor de vídeo para MP3</title>
+  <meta name="description" content="Converta vídeos do YouTube em arquivos MP3 com a qualidade que você escolher." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <main class="page">
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand__reel" aria-hidden="true">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="bar"></span><span class="bar"></span>
+        </span>
+        <div class="brand__text">
+          <span class="brand__name">Video2<em>MP3</em></span>
+          <span class="brand__tag">Extraia áudio em segundos</span>
+        </div>
+      </div>
+      <span class="pill pill--status" id="apiStatusPill">
+        <span class="pill__dot"></span> verificando servidor…
+      </span>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">Conversor · YouTube → MP3</p>
+      <h1>Cole o link. Escolha a faixa.<br />Baixe o áudio.</h1>
+      <p class="hero__sub">
+        Sem instalar nada. O Video2MP3 lê os metadados do vídeo, extrai a trilha de áudio
+        e entrega um MP3 pronto — em 128, 192, 256 ou 320 kbps.
+      </p>
+    </section>
+
+    <section class="card" id="converterCard">
+
+      <form id="verifyForm" class="url-form" autocomplete="off" novalidate>
+        <label for="videoUrl" class="field-label">Link do vídeo</label>
+        <div class="url-form__row">
+          <input
+            type="url"
+            id="videoUrl"
+            name="videoUrl"
+            placeholder="https://www.youtube.com/watch?v=..."
+            required
+          />
+          <button type="submit" id="verifyBtn" class="btn btn--primary">
+            <span class="btn__label">Verificar</span>
+          </button>
+        </div>
+        <p class="field-hint" id="urlHint">Cole a URL de um vídeo público do YouTube.</p>
+      </form>
+
+      <div class="alert alert--error" id="errorBox" hidden role="alert">
+        <span class="alert__icon">!</span>
+        <span class="alert__text" id="errorText"></span>
+      </div>
+
+      <div class="loading" id="loadingBox" hidden>
+        <span class="eq" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </span>
+        <span class="loading__label" id="loadingLabel">Verificando vídeo…</span>
+      </div>
+
+      <article class="video-info" id="videoInfo" hidden>
+        <div class="video-info__media">
+          <img id="videoThumb" src="" alt="" />
+          <span class="video-info__duration" id="videoDuration">00:00</span>
+        </div>
+
+        <div class="video-info__body">
+          <h2 id="videoTitle">—</h2>
+          <p class="video-info__meta" id="videoUploader">—</p>
+
+          <div class="quality">
+            <span class="field-label">Qualidade do MP3</span>
+            <div class="quality__options" id="qualityOptions" role="radiogroup" aria-label="Qualidade do áudio">
+              <button type="button" class="quality__opt" data-quality="128">128<small>kbps</small></button>
+              <button type="button" class="quality__opt is-selected" data-quality="192">192<small>kbps</small></button>
+              <button type="button" class="quality__opt" data-quality="256">256<small>kbps</small></button>
+              <button type="button" class="quality__opt" data-quality="320">320<small>kbps</small></button>
+            </div>
+          </div>
+
+          <button type="button" id="convertBtn" class="btn btn--accent btn--full">
+            <span class="btn__label">Converter para MP3</span>
+          </button>
+        </div>
+      </article>
+
+      <div class="alert alert--success" id="successBox" hidden>
+        <span class="alert__icon">♪</span>
+        <span class="alert__text">Conversão concluída! O download deve começar automaticamente.</span>
+      </div>
+
+    </section>
+
+    <footer class="page-footer">
+      <p>
+        Video2MP3 é um projeto de código aberto para uso pessoal. Respeite os direitos
+        autorais do conteúdo que você converte.
+      </p>
+    </footer>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
