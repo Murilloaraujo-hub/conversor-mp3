@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Video2MP3 — Converta vídeos em MP3. Cole o link do vídeo e transforme o áudio em MP3.">
+    <meta name="theme-color" content="#0f172a">
+    <title>🎵 Video2MP3 — Converta vídeos em MP3</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🎵</span>
+                <span class="logo-text">Video2MP3</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero -->
+            <section class="hero">
+                <h1 class="hero-title">Converta vídeos em MP3</h1>
+                <p class="hero-subtitle">Cole o link do vídeo e transforme o áudio em MP3.</p>
+            </section>
+
+            <!-- URL Input -->
+            <section class="input-section">
+                <div class="input-group">
+                    <label for="url-input" class="input-label">Cole o link do vídeo</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="url"
+                            id="url-input"
+                            class="url-input"
+                            placeholder="https://www.youtube.com/watch?v=..."
+                            autocomplete="off"
+                            spellcheck="false"
+                            aria-label="URL do vídeo"
+                        >
+                        <button
+                            id="btn-verify"
+                            class="btn btn-primary"
+                            type="button"
+                            aria-label="Verificar link"
+                        >
+                            <span class="btn-icon">🔍</span>
+                            <span class="btn-text">Verificar link</span>
+                        </button>
+                    </div>
+                    <p id="input-error" class="input-error" role="alert" aria-live="polite"></p>
+                </div>
+            </section>
+
+            <!-- Status Messages -->
+            <div id="status-area" class="status-area" aria-live="polite" hidden>
+                <div id="status-content" class="status-content">
+                    <div class="spinner" id="status-spinner"></div>
+                    <p id="status-text" class="status-text"></p>
+                </div>
+                <div class="progress-bar" id="progress-bar" hidden>
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Video Info -->
+            <section id="video-info" class="video-info" hidden>
+                <div class="info-card">
+                    <div class="info-layout">
+                        <div class="info-thumbnail-wrap" id="thumbnail-wrap" hidden>
+                            <img id="info-thumbnail" class="info-thumbnail" alt="Thumbnail do vídeo" loading="lazy">
+                        </div>
+                        <div class="info-details">
+                            <h2 id="info-title" class="info-title"></h2>
+                            <div class="info-meta">
+                                <p id="info-uploader" class="info-meta-item" hidden>
+                                    <span class="meta-icon">👤</span>
+                                    <span id="info-uploader-text"></span>
+                                </p>
+                                <p id="info-duration" class="info-meta-item" hidden>
+                                    <span class="meta-icon">⏱️</span>
+                                    <span id="info-duration-text"></span>
+                                </p>
+                                <p id="info-source" class="info-meta-item" hidden>
+                                    <span class="meta-icon">🌐</span>
+                                    <span id="info-source-text"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quality Selection -->
+                    <div class="quality-section">
+                        <label for="quality-select" class="quality-label">Qualidade do MP3:</label>
+                        <select id="quality-select" class="quality-select" aria-label="Qualidade do MP3">
+                            <option value="128">128 kbps</option>
+                            <option value="192" selected>192 kbps</option>
+                            <option value="256">256 kbps</option>
+                            <option value="320">320 kbps</option>
+                        </select>
+                    </div>
+
+                    <!-- Convert Button -->
+                    <button
+                        id="btn-convert"
+                        class="btn btn-convert"
+                        type="button"
+                        aria-label="Converter para MP3"
+                    >
+                        <span class="btn-icon">🎵</span>
+                        <span class="btn-text">Converter para MP3</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Result -->
+            <section id="result-section" class="result-section" hidden>
+                <div class="result-card">
+                    <div class="result-icon">✅</div>
+                    <h3 class="result-title">MP3 pronto!</h3>
+                    <p id="result-filename" class="result-filename"></p>
+
+                    <!-- Audio Player -->
+                    <div class="audio-player-wrap" id="audio-player-wrap" hidden>
+                        <audio id="audio-player" controls class="audio-player" preload="metadata">
+                            Seu navegador não suporta o elemento de áudio.
+                        </audio>
+                    </div>
+
+                    <button
+                        id="btn-download"
+                        class="btn btn-download"
+                        type="button"
+                        aria-label="Baixar MP3"
+                    >
+                        <span class="btn-icon">⬇️</span>
+                        <span class="btn-text">Baixar MP3</span>
+                    </button>
+
+                    <button
+                        id="btn-new"
+                        class="btn btn-secondary"
+                        type="button"
+                        aria-label="Converter outro vídeo"
+                    >
+                        Nova conversão
+                    </button>
+                </div>
+            </section>
+
+            <!-- Error -->
+            <section id="error-section" class="error-section" hidden>
+                <div class="error-card">
+                    <div class="error-icon">❌</div>
+                    <p id="error-message" class="error-message"></p>
+                    <button
+                        id="btn-retry"
+                        class="btn btn-secondary"
+                        type="button"
+                        aria-label="Tentar novamente"
+                    >
+                        Tentar novamente
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-notice">
+                ⚠️ Use o Video2MP3 somente com conteúdos que você tenha autorização para baixar ou converter.
+            </p>
+            <p class="footer-privacy">
+                🔒 Os arquivos utilizados durante o processamento são temporários e removidos após a conversão.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
